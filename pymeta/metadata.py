@@ -1,10 +1,9 @@
 from email.parser import HeaderParser
 from email.message import Message
 from typing import Dict, Iterator, Union, List, Any
-from typing_extensions import TypedDict
 import inspect
 import json
-from .constants import VERSIONED_METADATA_FIELDS
+from .metadata_constants import VERSIONED_METADATA_FIELDS
 import sys
 
 
@@ -24,14 +23,6 @@ def _canonicalize(
     other characters.
     """
     return {_json_form(key): value for key, value in metadata.items()}
-
-
-def check_python_compatability() -> None:
-    if sys.version_info[0] < 3:
-        raise ModuleNotFoundError()
-
-
-check_python_compatability()
 
 
 class Metadata:
@@ -131,6 +122,3 @@ class Metadata:
             metadata["Description"] = payload
 
         return _canonicalize(metadata)
-
-    def validate(self) -> bool:
-        raise NotImplementedError
